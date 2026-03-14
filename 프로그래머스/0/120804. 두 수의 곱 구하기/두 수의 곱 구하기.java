@@ -1,3 +1,11 @@
+/*
+알고리즘: 산술 연산 (Arithmetic Operation)
+핵심 개념:
+• 두 정수의 곱셈 연산 수행
+시간 복잡도: O(1)
+공간 복잡도: O(1)
+*/
+
 class Solution {
     public int solution(int num1, int num2) {
         return num1 * num2;
