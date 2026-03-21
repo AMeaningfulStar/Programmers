@@ -1,11 +1,11 @@
 class Solution {
     public int solution(String my_string) {
-        String regExp = "^[0-9]+$";
         int answer = 0;
         
-        for(String str:my_string.split("")){
-            if(str.matches(regExp)) {
-                answer += Integer.parseInt(str);
+        for(int i = 0; i < my_string.length(); i++) {
+            char c = my_string.charAt(i);
+            if(c >= '0'&& c <= '9') {
+                answer += c - '0';
             }
         }
         
