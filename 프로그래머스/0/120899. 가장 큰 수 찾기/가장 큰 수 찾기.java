@@ -1,15 +1,43 @@
+/*
+• 알고리즘: 배열 순회 + 최댓값 탐색 (Array Traversal & Max Search)
+• 핵심 개념
+ • 최댓값 추적 변수
+ • 인덱스 동시 관리
+ • 초기값 설정 중요
+• 시간 복잡도: O(N)
+• 공간 복잡도: O(1)
+*/
+
 class Solution {
     public int[] solution(int[] array) {
-        int max_num = 0;
-        int max_value_idx = -1;
+        int max = array[0];
+        int idx = 0;
         
-        for(int idx = 0; idx < array.length; idx++) {
-            if(array[idx] >= max_num) {
-                max_num = array[idx];
-                max_value_idx = idx;
+        for(int i = 1; i < array.length; i++) {
+            if(array[i] > max) {
+                max = array[i];
+                idx = i;
             }
         }
         
-        return new int[]{max_num, max_value_idx};
+        return new int[]{max, idx};
     }
 }
+
+/*
+다른 풀이
+class Solution {
+    public int[] solution(int[] array) {
+        int max = array[0], idx = 0;
+
+        for(int i = 1; i < array.length; i++) {
+            if(array[i] > max) {
+                max = array[i];
+                idx = i;
+            }
+        }
+
+        return new int[]{max, idx};
+    }
+}
+*/
