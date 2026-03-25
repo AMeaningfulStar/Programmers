@@ -1,13 +1,23 @@
+/*
+• 알고리즘: 배열 회전 (Array Rotation)
+• 핵심 개념
+ • 인덱스 이동 (i + d)
+ • 원형 구조 처리 (% n)
+ • 경계 처리 제거
+• 시간 복잡도: O(N)
+• 공간 복잡도: O(N)
+*/
+
 class Solution {
     public int[] solution(int[] numbers, String direction) {
-        int[] answer = new int[numbers.length];
+        int n = numbers.length;
+        int[] answer = new int[n];
         
-        if(direction.equals("left")) {
-            answer[numbers.length - 1] = numbers[0];
-            System.arraycopy(numbers, 1, answer, 0, numbers.length - 1);
-        } else {
-            answer[0] = numbers[numbers.length - 1];
-            System.arraycopy(numbers, 0, answer, 1, numbers.length - 1);
+        int d = direction.equals("right") ? 1 : -1;
+        
+        for(int i = 0; i < n; i++) {
+            int next = (i + d + n) % n;
+            answer[next] = numbers[i];
         }
         
         return answer;
