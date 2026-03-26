@@ -1,12 +1,28 @@
+/*
+• 알고리즘: 기하학 + 최소/최대 탐색
+• 핵심 개념
+ • 좌표 비교
+ • 같은 x / 같은 y 판단
+ • 절댓값 거리 계산
+ • (대안) min/max로 범위 계산
+• 시간 복잡도: O(N)
+• 공간 복잡도: O(1)
+*/
+
 class Solution {
     public int solution(int[][] dots) {
-        int w = 0;
-        int h = 0;
-        int[] add = dots[0];
-        for (int i = 1; i < dots.length; i++) {
-            if (add[0] != dots[i][0]) w = Math.abs(add[0] - dots[i][0]);
-            if (add[1] != dots[i][1]) h = Math.abs(add[1] - dots[i][1]);
+        int minX = Integer.MAX_VALUE;
+        int maxX = Integer.MIN_VALUE;
+        int minY = Integer.MAX_VALUE;
+        int maxY = Integer.MIN_VALUE;
+        
+        for (int[] dot : dots) {
+            minX = Math.min(minX, dot[0]);
+            maxX = Math.max(maxX, dot[0]);
+            minY = Math.min(minY, dot[1]);
+            maxY = Math.max(maxY, dot[1]);
         }
-        return w * h;
+        
+        return (maxX - minX) * (maxY - minY);
     }
 }
