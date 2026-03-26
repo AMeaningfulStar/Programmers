@@ -1,15 +1,16 @@
+/*
+• 알고리즘: 원형 배열 (Circular Array)
+• 핵심 개념
+ • 인덱스 이동 (* 2)
+ • 시작 위치 고려 (k - 1)
+ • 나머지 연산 (%)
+• 시간 복잡도: O(1)
+• 공간 복잡도: O(1)
+*/
+
 class Solution {
     public int solution(int[] numbers, int k) {
-        int numbers_idx = 0;
-        
-        for(int turn = 1; turn < k; turn++) {
-            numbers_idx += 2;
-        }
-        
-        if(numbers_idx >= numbers.length) {
-            numbers_idx = numbers_idx % numbers.length;
-        }
-        
-        return numbers[numbers_idx];
+        int idx = ((k - 1) * 2) % numbers.length;
+        return numbers[idx];
     }
 }
