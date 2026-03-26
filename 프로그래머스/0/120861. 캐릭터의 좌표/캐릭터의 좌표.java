@@ -1,27 +1,39 @@
+/*
+• 알고리즘: 시뮬레이션 (Simulation)
+• 핵심 개념
+ • 입력 명령 순차 처리
+ • 좌표 이동
+ • 보드 범위 경계 검사
+ • 방향별 조건 분기 (switch)
+• 시간 복잡도: O(N)
+• 공간 복잡도: O(1)
+*/
+
 class Solution {
     public int[] solution(String[] keyinput, int[] board) {
-        int[] answer = new int[]{0, 0};
+        int x = 0;
+        int y = 0;
         
-        for(String key:keyinput) {
-            if(key.equals("left")) {
-                answer[0]--;
-                if(answer[0] < -(int)(board[0] / 2))
-                    answer[0] = -(int)(board[0] / 2);
-            } else if (key.equals("right")) {
-                answer[0]++;
-                if(answer[0] > (int)(board[0] / 2))
-                    answer[0] = (int)(board[0] / 2);
-            } else if (key.equals("up")) {
-                answer[1]++;
-                if(answer[1] > (int)(board[1] / 2))
-                    answer[1] = (int)(board[1] / 2);
-            } else {
-                answer[1]--;
-                if(answer[1] < -(int)(board[1] / 2))
-                    answer[1] = -(int)(board[1] / 2);
-            } 
+        int maxX = board[0] / 2;
+        int maxY = board[1] / 2;
+        
+        for (String key : keyinput) {
+            switch (key) {
+                case "up" -> {
+                    if (y < maxY) y++;
+                }
+                case "down" -> {
+                    if (y > -maxY) y--;
+                }
+                case "left" -> {
+                    if (x > -maxX) x--;
+                }
+                case "right" -> {
+                    if (x < maxX) x++;
+                }
+            }
         }
         
-        return answer;
+        return new int[]{x, y};
     }
 }
