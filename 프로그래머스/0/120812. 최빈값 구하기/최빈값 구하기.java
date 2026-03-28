@@ -1,34 +1,41 @@
+/*
+• 알고리즘: 해시맵 기반 빈도 계산
+• 핵심 개념
+ • 빈도수 카운팅
+ • 최대값 추적
+ • 중복 최대값 판별
+• 시간 복잡도: O(N)
+• 공간 복잡도: O(N)
+*/
+
 import java.util.*;
 
 class Solution {
     public int solution(int[] array) {
-        // 각 값이 나타난 횟수를 저장할 Map
-        Map<Integer, Integer> countMap = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>();
         
-        // 배열을 돌면서 각 값이 나타난 횟수를 카운트
-        for(int num : array) {
-            // Map의 put 메서드로 값을 카운트
-            // 만약 해당 키(num)가 존재하지 않으면 기본값으로 0을 사용
-            countMap.put(num, countMap.getOrDefault(num, 0) + 1);
+        for (int num : array) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
         }
         
-        int maxCount = 0; // 가장 많이 나타난 횟수
-        int answer = 0; // 최빈값
+        int max = 0;
+        int answer = -1;
+        int count = 0;
         
-        // Map을 돌면서 가장 많이 나타난 횟수와 값 찾기
-        for(Map.Entry<Integer, Integer> entry : countMap.entrySet()) {
-            int num = entry.getKey();
-            int count = entry.getValue();
+        for (int key : map.keySet()) {
+            int freq = map.get(key);
             
-            if(count > maxCount) {
-                // 가장 많이 나타난 횟수와 값 업데이트
-                maxCount = count;
-                answer = num;
-            } else if(count == maxCount) {
-                // 최빈값이 여러 개 일 경우, -1 반환
-                answer = -1;
+            if (freq > max) {
+                max = freq;
+                answer = key;
+                count = 1;
+            } else if (freq == max) {
+                count++;
             }
         }
+        
+        if (count > 1) return -1;
+        
         return answer;
     }
 }
