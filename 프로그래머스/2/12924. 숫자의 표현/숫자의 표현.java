@@ -11,6 +11,35 @@
 
 class Solution {
     public int solution(int n) {
+        int answer = 0;
+        
+        int left = 1;
+        int right = 1;
+        int sum = 1;
+        
+        while (left <= n) {
+            if (sum == n) {
+                answer++;
+                sum -= left;
+                left++;
+            } else if (sum < n) {
+                right++;
+                sum += right;
+            } else {
+                sum -= left;
+                left++;
+            }
+        }
+        
+        return answer;
+    }
+}
+
+/*
+다른 풀이
+1.
+class Solution {
+    public int solution(int n) {
         int count = 0;
         
         for (int i = 1; i <= n; i++) {
@@ -22,3 +51,4 @@ class Solution {
         return count;
     }
 }
+*/
