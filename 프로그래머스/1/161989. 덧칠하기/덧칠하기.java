@@ -1,15 +1,25 @@
+/*
+• 알고리즘 유형: 그리디
+• 핵심 개념
+ • 왼쪽부터 처리
+ • 이미 칠해진 구간 skip
+ • 새로운 구간 시작 시 범위 갱신
+• 시간 복잡도: O(N)
+• 공간 복잡도: O(1)
+*/
+
 class Solution {
     public int solution(int n, int m, int[] section) {
-        int answer = 0; // 총 덧칠 횟수
-		int ok = section[0] - 1; // 현재까지 덧칠된 마지막 위치 (처음엔 section의 시작 이전)
-
-		for (int num : section) {
-			if (ok < num) { // 아직 덧칠되지 않은 구간 발견 시
-				answer++; // 덧칠 횟수 증가
-				ok = num + m - 1; // 현재 위치부터 m칸을 덧칠했다고 가정
-			}
-		}
-		
-		return answer;
+        int answer = 0;
+        int ok = 0;
+        
+        for (int s : section) {
+            if (ok < s) {
+                answer++;
+                ok = s + m - 1;
+            }
+        }
+        
+        return answer;
     }
 }
