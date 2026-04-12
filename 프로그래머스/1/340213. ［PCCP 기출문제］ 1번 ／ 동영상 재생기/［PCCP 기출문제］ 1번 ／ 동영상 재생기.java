@@ -1,55 +1,53 @@
+/*
+• 알고리즘 유형: 구현 / 시뮬레이션
+• 핵심 개념
+ • 시간을 초 단위로 변환
+ • prev / next 명령 처리
+ • 오프닝 구간이면 자동으로 op_end 이동
+ • 시작 전 / 명령 후 모두 보정
+• 시간 복잡도: O(commands.length)
+• 공간 복잡도: O(1)
+*/
+
 class Solution {
     public String solution(String video_len, String pos, String op_start, String op_end, String[] commands) {
-        // "prev" 명령을 입력할 경우 동영상의 재생 위치를 현재 위치에서 10초 전으로 이동
-		// "next" 명령을 입력할 경우 동영상의 재생 위치를 현재 위치에서 10초 후로 이동
+        int vLen = toSeconds(video_len);
+        int position = toSeconds(pos);
+        int opStart = toSeconds(op_start);
+        int opEnd = toSeconds(op_end);
 
-		String answer = "";
+        // 시작 위치가 오프닝 구간이면 먼저 이동
+        position = skipOpening(position, opStart, opEnd);
 
-		// 동영상의 길이(초 단위)
-		int video_sec = Integer.parseInt(video_len.split(":")[0]) * 60 + Integer.parseInt(video_len.split(":")[1]);
+        for (String command : commands) {
+            if (command.equals("prev")) {
+                position = Math.max(0, position - 10);
+            } else if (command.equals("next")) {
+                position = Math.min(vLen, position + 10);
+            }
 
-		// 오프닝 시작(초 단위)
-		int op_start_sec = Integer.parseInt(op_start.split(":")[0]) * 60 + Integer.parseInt(op_start.split(":")[1]);
+            // 이동 후 오프닝 구간이면 다시 이동
+            position = skipOpening(position, opStart, opEnd);
+        }
 
-		// 오프닝 끝(초 단위)
-		int op_end_sec = Integer.parseInt(op_end.split(":")[0]) * 60 + Integer.parseInt(op_end.split(":")[1]);
+        return toTime(position);
+    }
 
-		// 현 위치(초 단위)
-		int pos_sec = Integer.parseInt(pos.split(":")[0]) * 60 + Integer.parseInt(pos.split(":")[1]);
-		
-		if (op_start_sec <= pos_sec && pos_sec <= op_end_sec) {
-			pos_sec = op_end_sec;
-		}
-		
-		for (int idx = 0; idx < commands.length; idx++) {
-			switch (commands[idx]) {
-			case "prev": {
-				if (pos_sec - 10 < 0) {
-					pos_sec = 0;
-				} else {
-					pos_sec -= 10;
-				}
-				break;
-			}
-			case "next": {
-				if (pos_sec + 10 > video_sec) {
-					pos_sec = video_sec;
-				} else {
-					pos_sec += 10;
-				}
-				break;
-			}
-			}
+    private int toSeconds(String time) {
+        String[] arr = time.split(":");
+        return Integer.parseInt(arr[0]) * 60 + Integer.parseInt(arr[1]);
+    }
 
-			if (op_start_sec <= pos_sec && pos_sec <= op_end_sec) {
-				pos_sec = op_end_sec;
-			}
-		}
+    private int skipOpening(int pos, int opStart, int opEnd) {
+        if (opStart <= pos && pos <= opEnd) {
+            return opEnd;
+        }
+        return pos;
+    }
 
-		answer += pos_sec / 60 < 10 ? "0" + Integer.toString(pos_sec / 60) : Integer.toString(pos_sec / 60);
-		answer += ":";
-		answer += pos_sec % 60 < 10 ? "0" + Integer.toString(pos_sec % 60) : Integer.toString(pos_sec % 60);
-
-		return answer;
+    private String toTime(int time) {
+        int minute = time / 60;
+        int second = time % 60;
+        return String.format("%02d:%02d", minute, second);
     }
 }
